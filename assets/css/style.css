@@ -1,0 +1,16 @@
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: block;
+}
+
+/* body {
+    background-image: url("../images/background.jpg");
+    background-position: top right;
+} */
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+}
