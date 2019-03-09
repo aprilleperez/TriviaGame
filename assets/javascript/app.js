@@ -9,7 +9,7 @@ var correct = 0; // correct points
 var wrong = 0; // wrong points
 
 var questionCount = 0; // tracking which question user is on
-    console.log("base qC " + questionCount);
+console.log("base qC " + questionCount);
 
 
 // Array of Questions
@@ -100,10 +100,10 @@ function start() {
     if (!timerRunning) { //if timer isn't running
         timerRunning = true; // set timer to run
         printQuestion(questionCount); // CALLS printQuestion function, passing through value of questionCount
-            console.log("current qC " + questionCount);
+        console.log("current qC " + questionCount);
         intervalID = setInterval(count, 1000); // set the interval to count (decrement) every second, CALLS count function
         questionCount++; // increases questionCount by one, indicating that the next question will follow 
-            console.log("incremented qC " + questionCount);
+        console.log("incremented qC " + questionCount);
     }
 }
 
@@ -133,15 +133,17 @@ $('#option1, #option2, #option3, #option4').click(function (event) { // when one
     var clickedOption = $(this).val(); // store which button was clicked in a variable
     console.log(clickedOption);
 
-    //Carrie's code below!
-        let userPicked = options[questionCount - 1][clickedOption];
-        console.log(userPicked);
-    //end of Carrie's code
-    
+    let userPicked = options[questionCount - 1][clickedOption];
+    console.log(userPicked);
 
-// compare clickedOption with correctAnswer's
+    if (userPicked = correctAnswer.toString([questionCount - 1])) {
+        alert("this was correct");
+    } else {
+        alert("this was incorrect");
+    }
 
-    
+
+
     // for (j = 0; j < correctAnswer.length; i++) {
     //     if (j === questionCount) {
 
@@ -164,12 +166,6 @@ $('#option1, #option2, #option3, #option4').click(function (event) { // when one
 
 
 
-
-
-
-
-
-// $(`#option${[numOfQuestion]}`).html(options.q${[numOfQuestion -1]});
 
 
 
