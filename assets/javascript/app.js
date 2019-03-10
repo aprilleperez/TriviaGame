@@ -1,12 +1,12 @@
 // GAME CAN BE FOUND AT: https://aprilleperez.github.io/bootstrap-portfolio/portfolio.html
 
-
+// time vars
 var intervalID; // holds setInterval that runs timer
 var timerRunning = false; // timer isn't running
 var time = 15; // declare 15 seconds
 
+// point vars
 var correct = 0; // correct points
-var wrong = 0; // wrong points
 
 var questionCount = 0; // tracking which question user is on
 console.log("base qC " + questionCount);
@@ -14,10 +14,10 @@ console.log("base qC " + questionCount);
 
 // Array of Questions
 var questions = [
-    "How do you spell his name?",
+    "How do you spell the main character's name?",
     "What was Sokka's alias?",
     "Who is the only bender of these choices?",
-    "Which of these names was not one of Toph's aliases throughout the series?",
+    "Which of these names was NOT one of Toph's aliases throughout the series?",
     "Which air temple did Teo, his father, and a group of refugees set up shop?"
 ];
 
@@ -44,15 +44,47 @@ var correctAnswer = [
 // event listeners, JS runs when button clicked
 window.onload = function () {
 
-    $(function () {
+    //$(function () {
         $('#start-button').click(function () {  // when start button is clicked
             $("#start-button, #instructions1, #instructions2").addClass("hidden"); // hides start page
             $("#domOptionButtons, #domTimeRemaining, #domQuestion").removeClass("hidden"); // shows game page
             start(); // CALLS start function
-            // nextQuestion();
         });
-    });
+    //});
 };
+
+// function to start timer
+function start() {
+    if (!timerRunning) { //if timer isn't running
+        timerRunning = true; // set timer to run
+        time = 15; // set time to 15 seconds
+        $("#domTimer").html("00:15"); // display time at 15 seconds
+        printQuestion(questionCount); // CALLS printQuestion function, passing through value of questionCount
+        console.log("current qC " + questionCount);
+        intervalID = setInterval(count, 1000); // set the interval to count (decrement) every second, CALLS count function
+        questionCount++; // increases questionCount by one, indicating that the next question will follow 
+        console.log("incremented qC " + questionCount);
+    }
+
+    if (questionCount >= 6) {
+        setTimeout(function () { // set timeout
+            gameOver(); // CALL start function again
+        }, 1000 * 1);
+    }
+}
+
+// function to print questions and options to DOM
+function printQuestion() {
+    for (i = 0; i < questions.length; i++) {
+        if (i === questionCount) { // for example, if i(0) === questionCount(0)
+            $("#domQuestion").html(questions[i]); // change DOM to indexed question (0 -> 1st question)
+            $("#option1").html(options[i][0]); // change DOM to indexed options (0 -> 1st option, 0 -> first index to first button)
+            $("#option2").html(options[i][1]);
+            $("#option3").html(options[i][2]);
+            $("#option4").html(options[i][3]);
+        }
+    }
+}
 
 // function for counting down
 function count() {
@@ -69,8 +101,8 @@ function count() {
 
     // stop countdown when timer reaches 0
     if (time == 0) {
-        wrong++;
         stop(); // CALLS stop function
+        outOfTime();
     }
 }
 
@@ -94,74 +126,78 @@ function timeConverter(t) {
     return minutes + ":" + seconds;
 }
 
-
-// function to start timer
-function start() {
-    if (!timerRunning) { //if timer isn't running
-        timerRunning = true; // set timer to run
-        printQuestion(questionCount); // CALLS printQuestion function, passing through value of questionCount
-        console.log("current qC " + questionCount);
-        intervalID = setInterval(count, 1000); // set the interval to count (decrement) every second, CALLS count function
-        questionCount++; // increases questionCount by one, indicating that the next question will follow 
-        console.log("incremented qC " + questionCount);
-    }
-}
-
-function stop() { // function to stop timer
+// function to stop timer
+function stop() {
     if (timerRunning) { // if the timer is running
         timerRunning = false; // set timer to stop
         clearInterval(intervalID); // clear the interval
     }
-
 }
 
-function printQuestion() {
-    for (i = 0; i < questions.length; i++) {
-        if (i === questionCount) { // for example, if i(0) === questionCount(0)
-            $("#domQuestion").html(questions[i]); // change DOM to indexed question (0 -> 1st question)
-            $("#option1").html(options[i][0]); // change DOM to indexed options (0 -> 1st option, 0 -> first index to first button)
-            $("#option2").html(options[i][1]);
-            $("#option3").html(options[i][2]);
-            $("#option4").html(options[i][3]);
-        }
-    }
-}
-
+// listens for which of 4 buttons was clicked
 $('#option1, #option2, #option3, #option4').click(function (event) { // when one of 4 option buttons are clicked
-    console.log("this was clicked");
 
-    var clickedOption = $(this).val(); // store which button was clicked in a variable
-    console.log(clickedOption);
+    var clickedOption = $(this).val(); // store which button's value was clicked in a variable (number)
 
-    let userPicked = options[questionCount - 1][clickedOption];
-    console.log(userPicked);
+    let userPicked = options[questionCount - 1][clickedOption]; // stores option data based off of question count with the string indexed (string) from clickedOption (i.e. on first question(qC = 1) if user clicked Option1(value 0), clicked option = 0, and options = first question array, and first indexed item)
 
-    if (userPicked = correctAnswer.toString([questionCount - 1])) {
-        alert("this was correct");
+    if (userPicked === correctAnswer[questionCount - 1]) { // if user's selected button equals the answer for the question
+        timerRunning = false; // stop timer
+        clearInterval(intervalID); // clear interval
+        correct++; // add correct point
+        correctMessage(); // CALL correct message function
     } else {
-        alert("this was incorrect");
+        timerRunning = false; // stop timer
+        clearInterval(intervalID); // stop timer
+        wrongMessage(); // CALL wrong message function
     }
-
-
-
-    // for (j = 0; j < correctAnswer.length; i++) {
-    //     if (j === questionCount) {
-
-    //     }  
-    // };
 });
 
+function correctMessage() {
+    $("#correctMessage").modal("show"); // show correct message
+    setTimeout(function () { // set timeout
+        start(); // CALL start function again
+        $("#correctMessage").modal("hide"); // hide correct message
+    }, 1000 * 2); // after two seconds
+
+}
+
+function wrongMessage() {
+    $("#wrongMessage").modal("show"); // show wrong message
+    setTimeout(function () { // set timeout
+        start(); // CALL start function again
+        $("#wrongMessage").modal("hide"); // hide correct message
+    }, 1000 * 2); // after two seconds
+
+}
+
+function outOfTime() {
+    $("#outOfTime").modal("show"); // show out of time message
+    setTimeout(function () { // set timeout
+        start(); // CALL start function again
+        $("#outOfTime").modal("hide"); // hide correct message
+    }, 1000 * 2); // after two seconds
+
+}
+
+// Game over function
+function gameOver() {
+    $("#domOptionButtons, #domTimeRemaining, #domQuestion").addClass("hidden"); // hide game page
+    $("#domCorrect").html(correct); // show points out of 5 user got
+    $("#play-again, #domPoints, #domEndMessage").removeClass("hidden"); // show end page
+
+    $('#play-again').click(function () {  // when play again button is clicked
+        $("#play-again, #domPoints, #domEndMessage").addClass("hidden"); // hides end page
+        timerRunning = false; // timer isn't running
+        clearInterval(intervalID); // clear interval
+        correct = 0; // zeroed correct
+        questionCount = 0; // zeroed question
+        $("#start-button, #instructions1, #instructions2").removeClass("hidden"); // shows start page
+    });
+}
 
 
 
-// function answerResult() {
-
-// }
-
-
-// function nextQuestion() {
-
-// }
 
 
 
@@ -192,6 +228,17 @@ $('#option1, #option2, #option3, #option4').click(function (event) { // when one
 
 
 // GAME RESETS BY:
+
+
+
+
+
+
+
+
+
+
+
 
 
 

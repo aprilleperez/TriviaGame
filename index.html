@@ -19,6 +19,52 @@
     <div class="container">
         <h1 class="text-center">Avatar: The Last Trivia Game</h1>
 
+        <!-- Correct Modal -->
+        <div class="modal fade hidden" id="correctMessage" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Flame-eyo! You got it! :D</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wrong Modal -->
+        <div class="modal fade hidden" id="wrongMessage" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Monkey-feathers! That wasn't it :(</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Out of Time Modal -->
+        <div class="modal fade hidden" id="outOfTime" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Oops! Took too long to answer! D:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="jumbotron">
             <div class="row">
 
@@ -28,12 +74,19 @@
                 </div>
 
                 <div class="col-md-8 domTextDisplay">
+                    <!-- Start Page -->
                     <p id="instructions1">You will be asked a series of questions about Avatar: The Last Airbender.
                     </p>
                     <p id="instructions2">Each question must be answered in 15 seconds!</p>
 
+                    <!-- Game Page -->
                     <p id="domTimeRemaining" class="hidden">Time Remaining <span id="domTimer">00:15</span></p>
                     <p id="domQuestion" class="hidden">Question</p>
+
+                    <!-- End of Game Page -->
+                    <p id="domPoints" class="hidden">Alright! You got <span id="domCorrect"></span>/5 points!</p>
+                    <p id="domEndMessage" class="hidden">Thanks for testing your Avatar knowledge!</p>
+
                 </div>
 
             </div>
@@ -41,18 +94,27 @@
 
         <br>
 
+        <!-- Start Page -->
         <button type="button" id="start-button" class="btn btn-info btn-lg btn-block">Start Game</button>
 
+        <!-- Game Page -->
         <div class="row hidden" id="domOptionButtons">
-            <div class="col-md-3"><button type="button" id="option1" value="0" class="btn btn-info btn-lg btn-block optionButtons">- -</button>
+            <div class="col-md-3"><button type="button" id="option1" value="0"
+                    class="btn btn-info btn-lg btn-block optionButtons">- -</button>
             </div>
-            <div class="col-md-3"><button type="button" id="option2" value="1" class="btn btn-info btn-lg btn-block optionButtons">- -</button>
+            <div class="col-md-3"><button type="button" id="option2" value="1"
+                    class="btn btn-info btn-lg btn-block optionButtons">- -</button>
             </div>
-            <div class="col-md-3"><button type="button" id="option3" value="2" class="btn btn-info btn-lg btn-block optionButtons">- -</button>
+            <div class="col-md-3"><button type="button" id="option3" value="2"
+                    class="btn btn-info btn-lg btn-block optionButtons">- -</button>
             </div>
-            <div class="col-md-3"><button type="button" id="option4" value="3" class="btn btn-info btn-lg btn-block optionButtons">- -</button>
+            <div class="col-md-3"><button type="button" id="option4" value="3"
+                    class="btn btn-info btn-lg btn-block optionButtons">- -</button>
             </div>
         </div>
+
+        <!-- End of Game Page -->
+        <button type="button" id="play-again" class="btn btn-info btn-lg btn-block hidden">Play Again?</button>
 
 
     </div>
