@@ -9,7 +9,6 @@ var time = 15; // declare 15 seconds
 var correct = 0; // correct points
 
 var questionCount = 0; // tracking which question user is on
-console.log("base qC " + questionCount);
 
 
 // Array of Questions
@@ -43,14 +42,12 @@ var correctAnswer = [
 //-----------------------------START OF GAME------------------------------
 // event listeners, JS runs when button clicked
 window.onload = function () {
+    $('#start-button').click(function () {  // when start button is clicked
+        $(".startPage").addClass("hidden"); // hides start page
+        $(".gamePage").removeClass("hidden"); // shows game page
+        start(); // CALLS start function
+    });
 
-    //$(function () {
-        $('#start-button').click(function () {  // when start button is clicked
-            $("#start-button, #instructions1, #instructions2").addClass("hidden"); // hides start page
-            $("#domOptionButtons, #domTimeRemaining, #domQuestion").removeClass("hidden"); // shows game page
-            start(); // CALLS start function
-        });
-    //});
 };
 
 // function to start timer
@@ -60,16 +57,14 @@ function start() {
         time = 15; // set time to 15 seconds
         $("#domTimer").html("00:15"); // display time at 15 seconds
         printQuestion(questionCount); // CALLS printQuestion function, passing through value of questionCount
-        console.log("current qC " + questionCount);
         intervalID = setInterval(count, 1000); // set the interval to count (decrement) every second, CALLS count function
         questionCount++; // increases questionCount by one, indicating that the next question will follow 
-        console.log("incremented qC " + questionCount);
     }
 
-    if (questionCount >= 6) {
+    if (questionCount >= 6) { // if question count is greater than/equal to 6
         setTimeout(function () { // set timeout
-            gameOver(); // CALL start function again
-        }, 1000 * 1);
+            gameOver(); // CALL game over function again
+        }, 1000 * 1); // after 1 second
     }
 }
 
@@ -90,11 +85,9 @@ function printQuestion() {
 function count() {
     // decrement time by 1,
     time--;
-    // console.log(time);
 
     // Get current time, pass into timeConverter function, save result in variable.
     var converted = timeConverter(time); // CALLS timeConverter function
-    // console.log(converted);
 
     // show converted time in the "display" div.
     $("#domTimer").text(converted);
@@ -108,7 +101,6 @@ function count() {
 
 // function for converting time 
 function timeConverter(t) {
-
     var minutes = Math.floor(t / 60);
     var seconds = t - (minutes * 60);
 
@@ -166,7 +158,7 @@ function wrongMessage() {
     $("#wrongMessage").modal("show"); // show wrong message
     setTimeout(function () { // set timeout
         start(); // CALL start function again
-        $("#wrongMessage").modal("hide"); // hide correct message
+        $("#wrongMessage").modal("hide"); // hide wrong message
     }, 1000 * 2); // after two seconds
 
 }
@@ -175,24 +167,24 @@ function outOfTime() {
     $("#outOfTime").modal("show"); // show out of time message
     setTimeout(function () { // set timeout
         start(); // CALL start function again
-        $("#outOfTime").modal("hide"); // hide correct message
+        $("#outOfTime").modal("hide"); // hide out of time message
     }, 1000 * 2); // after two seconds
 
 }
 
 // Game over function
 function gameOver() {
-    $("#domOptionButtons, #domTimeRemaining, #domQuestion").addClass("hidden"); // hide game page
+    $(".gamePage").addClass("hidden"); // hides game page
     $("#domCorrect").html(correct); // show points out of 5 user got
-    $("#play-again, #domPoints, #domEndMessage").removeClass("hidden"); // show end page
+    $(".endPage").removeClass("hidden"); // shows end page
+    timerRunning = false; // timer isn't running
+    clearInterval(intervalID); // clear interval
 
     $('#play-again').click(function () {  // when play again button is clicked
-        $("#play-again, #domPoints, #domEndMessage").addClass("hidden"); // hides end page
-        timerRunning = false; // timer isn't running
-        clearInterval(intervalID); // clear interval
+        $(".endPage").addClass("hidden"); // hides end page
         correct = 0; // zeroed correct
         questionCount = 0; // zeroed question
-        $("#start-button, #instructions1, #instructions2").removeClass("hidden"); // shows start page
+        $(".startPage").removeClass("hidden"); // shows start page
     });
 }
 
@@ -202,11 +194,7 @@ function gameOver() {
 
 
 
-
-
-
-
-// PRE-CODE THINKING
+// ------------------------------------PRE-CODE THINKING
 
 // GAME SETS UP WITH:
 // Shown sections - 1. Game title (same throughout), 2. instructions (body), 3. start button (at end, becomes Play Again)
@@ -228,6 +216,9 @@ function gameOver() {
 
 
 // GAME RESETS BY:
+// if end of questions, display end page
+// tally up points correct out of 5
+// display play again --> restart game
 
 
 
@@ -238,55 +229,13 @@ function gameOver() {
 
 
 
+// --------------------------EXTRA CODE DUMP
 
+    // $("#start-button, #instructions1, #instructions2").addClass("hidden"); // hides start page
+    // $("#domOptionButtons, #domTimeRemaining, #domQuestion").removeClass("hidden"); // shows game page
 
+    // $("#play-again, #domPoints, #domEndMessage").removeClass("hidden"); // show end page
+    // $("#domOptionButtons, #domTimeRemaining, #domQuestion").addClass("hidden"); // hide game page
 
-
-
-
-
-
-
-// var questions1 = [
-//     {
-//         question: "How do you spell his name?",
-//         choices: ["Ang", "Aang", "Tenzin", "Angg"],
-//         correctAnswer: "Aang",
-//     }
-// ]
-
-
-// Questions object
-// var questions = {
-//     q1: "How do you spell his name?",
-//     q2: "What was Sokka's alias?",
-//     q3: "Who is the only bender of these choices?",
-//     q4: "Which of these names was not one of Toph's aliases throughout the series?",
-//     q5: "Which air temple did Teo, his father, and a group of refugees set up shop?",
-// }
-
-// Options (buttons) object
-// var options = {
-//     q1: ["Ang", "Aang", "Tenzin", "Angg"],
-//     q2: ["Joke Master", "Non-Bender Warrior", "Boomerang Guy", "Hungry Guy"],
-//     q3: ["Sokka", "Haru", "Suki", "The Earth King"],
-//     q4: ["Metal Master", "The Blind Bandit", "The Runaway", "Chief"],
-//     q5: ["Western Air Temple", "Eastern Air Temple", "Southern Air Temple", "Northern Air Temple"],
-// }
-
-// Correct Answers object
-// var correctAnswer = {
-//     q1: "Aang",
-//     q2: "Boomerang Guy",
-//     q3: "Haru",
-//     q4: "Metal Master",
-//     q5: "Northern Air Temple",
-// }
-
-
-    // $("#domQuestion").html(questions.q1);
-
-    // $("#option1").html(options.q1[0]);
-    // $("#option2").html(options.q1[1]);
-    // $("#option3").html(options.q1[2]);
-    // $("#option4").html(options.q1[3]); 
+    // $("#play-again, #domPoints, #domEndMessage").addClass("hidden"); // hides end page
+    // $("#start-button, #instructions1, #instructions2").removeClass("hidden"); // shows start page

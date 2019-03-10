@@ -6,11 +6,49 @@
     display: block;
 }
 
-/* body {
-    background-image: url("../images/background.jpg");
-    background-position: top right;
-} */
+body {
+    background-image: url("../images/background2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Kalam', cursive;
+} 
+
+.musicPlayer {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 h1 {
     font-family: 'Permanent Marker', cursive;
+}
+
+.cstmJumbotron {
+    background-color: rgba(235, 235, 235, 0.267);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+#option1 {
+    background-color: darkcyan;
+    border-color:  darkcyan;
+}
+
+#option2 {
+    background-color: olive;
+    border-color:  olive;
+}
+
+#option3 {
+    background-color: maroon;
+    border-color:  maroon;
+}
+
+#option4 {
+    background-color: darkgoldenrod;
+    border-color:  darkgoldenrod;
 }

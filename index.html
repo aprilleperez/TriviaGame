@@ -11,13 +11,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Kalam" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
 
 </head>
 
 <body>
     <div class="container">
-        <h1 class="text-center">Avatar: The Last Trivia Game</h1>
+        <div class="headerArea">
+            <br>
+            <h1 class="text-center">Avatar: The Last Trivia Game</h1>
+            <br>
+            <br>
+            <audio controls loop class="musicPlayer">
+                <source src="assets/images/Safe Return Extended - With Wind Sounds.mp3" type="audio/mp3" />
+            </audio>
+        </div>
 
         <!-- Correct Modal -->
         <div class="modal fade hidden" id="correctMessage" tabindex="-1" role="dialog"
@@ -65,27 +74,38 @@
         </div>
 
 
-        <div class="jumbotron">
+        <div class="jumbotron cstmJumbotron">
             <div class="row">
 
                 <div class="col-md-4 domImage">
-                    <p class="image text-center">Image will go here</p>
-                    <!-- <img src="assets/images/avatarAllChar.jpg" > -->
+                    <!-- <p class="image text-center">Image will go here</p> -->
+                    <img src="assets/images/avatarAllChar.jpg">
                 </div>
 
                 <div class="col-md-8 domTextDisplay">
                     <!-- Start Page -->
-                    <p id="instructions1">You will be asked a series of questions about Avatar: The Last Airbender.
-                    </p>
-                    <p id="instructions2">Each question must be answered in 15 seconds!</p>
+                    <div class="startPage">
+                        <br>
+                        <h4 id="instructions1">There are 5 questions about Avatar: The Last Airbender.</h4>
+                        <br>
+                        <h4 id="instructions2">Each question must be answered in 15 seconds!</h4>
+                    </div>
 
                     <!-- Game Page -->
-                    <p id="domTimeRemaining" class="hidden">Time Remaining <span id="domTimer">00:15</span></p>
-                    <p id="domQuestion" class="hidden">Question</p>
+                    <div class="gamePage hidden">
+                        <br>
+                        <h4 id="domTimeRemaining">Time Remaining <span id="domTimer">00:15</span></h4>
+                        <br>
+                        <h4 id="domQuestion">Question</h4>
+                    </div>
 
                     <!-- End of Game Page -->
-                    <p id="domPoints" class="hidden">Alright! You got <span id="domCorrect"></span>/5 points!</p>
-                    <p id="domEndMessage" class="hidden">Thanks for testing your Avatar knowledge!</p>
+                    <div class="endPage hidden">
+                        <br>
+                        <h4 id="domPoints">Alright, you got <span id="domCorrect"></span>/5 points!</h4>
+                        <br>
+                        <h4 id="domEndMessage">Thanks for testing your Avatar knowledge!</h4>
+                    </div>
 
                 </div>
 
@@ -95,10 +115,10 @@
         <br>
 
         <!-- Start Page -->
-        <button type="button" id="start-button" class="btn btn-info btn-lg btn-block">Start Game</button>
+        <button type="button" id="start-button" class="btn btn-info btn-lg btn-block startPage">Start Game</button>
 
         <!-- Game Page -->
-        <div class="row hidden" id="domOptionButtons">
+        <div class="row gamePage hidden" id="domOptionButtons">
             <div class="col-md-3"><button type="button" id="option1" value="0"
                     class="btn btn-info btn-lg btn-block optionButtons">- -</button>
             </div>
@@ -114,7 +134,7 @@
         </div>
 
         <!-- End of Game Page -->
-        <button type="button" id="play-again" class="btn btn-info btn-lg btn-block hidden">Play Again?</button>
+        <button type="button" id="play-again" class="btn btn-info btn-lg btn-block endPage hidden">Play Again?</button>
 
 
     </div>
